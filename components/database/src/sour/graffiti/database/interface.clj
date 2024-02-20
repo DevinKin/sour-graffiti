@@ -1,5 +1,7 @@
 (ns sour.graffiti.database.interface
   (:require
+   [sour.graffiti.database.core]
+
    ;; Edge
    [kit.edge.db.sql.migratus]
    [kit.edge.db.postgres]
