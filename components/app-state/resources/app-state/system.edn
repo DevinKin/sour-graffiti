@@ -19,5 +19,6 @@
 
  :db.sql/migrations
  {:store :database
+  :migration-dir "database/migrations"
   :db {:datasource #ig/ref :db.sql/connection}
   :migrate-on-init? true}}
