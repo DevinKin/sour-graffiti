@@ -1,4 +1,23 @@
 {:system/env
  #profile {:dev :dev
            :test :test
-           :prod :prod}}
+           :prod :prod}
+
+ :db.sql/connection
+ #profile {:dev {:jdbc-url "jdbc:postgresql://localhost/sour?user=sour&password=a123456"}
+           :test {}
+           :prod {:jdbc-url #env JDBC_URL
+                  :init-size 1
+                  :min-idle 1
+                  :max-idle 8
+                  :max-active 32}}
+
+ :db.sql/query-fn
+ {:conn #ig/ref :db.sql/connection
+  :options {}
+  :filename "database/queries.sql"}
+
+ :db.sql/migrations
+ {:store :database
+  :db {:datasource #ig/ref :db.sql/connection}
+  :migrate-on-init? true}}

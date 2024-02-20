@@ -2,6 +2,7 @@
   "Userspace functions you can run by default in your local REPL."
   (:require
    [clojure.pprint]
+   [clojure.string :as string]
    [clojure.spec.alpha :as s]
    [clojure.tools.namespace.repl :as repl]
    ;[criterium.core :as c]                                  ;; benchmarking
@@ -10,7 +11,9 @@
    [integrant.repl :refer [clear go halt prep init reset reset-all]]
    [integrant.repl.state :as state]
    [lambdaisland.classpath.watch-deps :as watch-deps]
-   [sour.graffiti.app-state.interface :as app-state]))
+   [sour.graffiti.app-state.interface :as app-state]
+   [sour.graffiti.database.interface :as database]
+   [polylith.clj.core.api.interface :refer [workspace]]))
 
 (watch-deps/start! {:aliases [:dev :test]})
 
@@ -26,7 +29,9 @@
 
 (dev-prep!)
 
-(repl/set-refresh-dirs "components/app-state/src")
+(apply repl/set-refresh-dirs (filter (fn [path]
+                                       (and (not= path "development/src")
+                                            (string/includes? path "/src"))) (workspace "stable" "paths" "existing")))
 
 (def refresh repl/refresh)
 

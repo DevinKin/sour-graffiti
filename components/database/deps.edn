@@ -1,0 +1,6 @@
+{:paths ["src" "resources"]
+ :deps {io.github.kit-clj/kit-postgres {:mvn/version "1.0.4"}
+        io.github.kit-clj/kit-sql-migratus {:mvn/version "1.0.4"}
+        io.github.kit-clj/kit-sql-conman {:mvn/version "1.10.1"}}
+ :aliases {:test {:extra-paths ["test"]
+                  :extra-deps {}}}}

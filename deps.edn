@@ -10,7 +10,10 @@
                                com.lambdaisland/classpath {:mvn/version "0.4.44"}
 
                                ; Components
-                               poly/app-state {:local/root "components/app-state"}}}
+                               poly/app-state {:local/root "components/app-state"}
+                               poly/database {:local/root "components/database"}
+
+                               polylith/clj-poly {:mvn/version "0.2.18"}}}
 
             :test {:extra-paths ["components/app-state/test"]}
 
