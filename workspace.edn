@@ -6,5 +6,7 @@
        :auto-add false}
  :tag-patterns {:stable "stable-*"
                 :release "v[0-9]*"}
- :projects {"development" {:alias "dev"}
+ :projects {"development" {:alias "dev"
+                           #_:test #_{:setup-fn sour.graffiti.database.test-setup/setup
+                                      :teardown-fn sour.graffiti.database.test-setup/teardown}}
             "sour-tutorial" {:alias "stut"}}}

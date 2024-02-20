@@ -1,5 +1,9 @@
 -- Place your queries here. Docs available https://www.hugsql.org/
 
+-- :name select-test :? :1
+-- :doc returns a shipping costs by code, or nil if not present
+SELECT 1 AS col
+
 -- :name list-shipping-costs :? :*
 -- :doc selects all available shipping costs
 SELECT code, TO_CHAR(date, 'YYYY-MM-DD') AS date, courier_hub, courier_hub_addr, weight, price, type

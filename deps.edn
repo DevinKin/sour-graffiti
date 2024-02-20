@@ -15,7 +15,8 @@
 
                                polylith/clj-poly {:mvn/version "0.2.18"}}}
 
-            :test {:extra-paths ["components/app-state/test"]}
+            :test {:extra-paths ["components/app-state/test"
+                                 "components/database/test"]}
 
             :poly {:main-opts ["-m" "polylith.clj.core.poly-cli.core"]
                    :extra-deps {polylith/clj-poly {:mvn/version "0.2.18"}}}}}
