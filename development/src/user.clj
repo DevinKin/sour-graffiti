@@ -14,7 +14,8 @@
    [sour.graffiti.app-state.interface :as app-state]
    [sour.graffiti.database.interface]
    [sour.graffiti.web-server.interface]
-   [sour.graffiti.culture.main]
+   ;[sour.graffiti.culture.main]
+   [sour.graffiti.shop.main]
    [polylith.clj.core.api.interface :refer [workspace]]))
 
 (watch-deps/start! {:aliases [:dev :test]})
@@ -31,6 +32,7 @@
 
 (dev-prep!)
 
+;; fix: need to refresh by bases and its bricks
 (apply repl/set-refresh-dirs (filter (fn [path]
                                        (and
                                         (not= path "development/src")
