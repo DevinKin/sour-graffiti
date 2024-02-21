@@ -11,11 +11,9 @@
    [integrant.repl :refer [clear go halt prep init reset reset-all]]
    [integrant.repl.state :as state]
    [lambdaisland.classpath.watch-deps :as watch-deps]
-   [sour.graffiti.app-state.interface :as app-state]
-   [sour.graffiti.database.interface]
-   [sour.graffiti.web-server.interface]
    ;[sour.graffiti.culture.main]
    ;[sour.graffiti.shop.main]
+   [sour.graffiti.app-state.interface :as app-state]
    [polylith.clj.core.api.interface :refer [workspace]]))
 
 (watch-deps/start! {:aliases [:dev :test]})

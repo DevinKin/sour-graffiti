@@ -1,6 +1,5 @@
 (ns sour.graffiti.web-server.interface
   (:require
-
    [sour.graffiti.web-server.core :as web-server]
    [sour.graffiti.web-server.middleware.exception :as exception]
    [sour.graffiti.web-server.middleware.formats :as formats]))
@@ -18,3 +17,7 @@
 (def wrap-exception-mw exception/wrap-exception)
 
 (def format-instance formats/instance)
+
+(defn route-data
+  [req]
+  (get-in req [:reitit.core/match :data]))

@@ -1,6 +1,7 @@
 (ns sour.graffiti.web-server.core
   (:require
    [sour.graffiti.app-state.interface :as app-state]
+   [sour.graffiti.env.interface :refer [defaults]]
    [clojure.tools.logging :as log]
 
    ;; Handler
@@ -24,15 +25,15 @@
 (defn stop
   "stop the web server"
   []
-  (log/info "\n-=[culture service has shut down successfully]=-")
+  ((or (:stop defaults) (fn [])))
   (some-> (deref system) (app-state/halt-system))
   (shutdown-agents))
 
 (defn start
   "start the web server"
   [& [params]]
-  (log/info "\n-=[culture service started successfully using the development or test profile]=-")
-  (->> (app-state/system-config (or (:opts params) {:profile :dev}))
+  ((or (:start params) (:start defaults) (fn [])))
+  (->> (app-state/system-config (or (:opts params) (:opts defaults) {}))
        (app-state/init-system)
        (reset! system))
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop)))

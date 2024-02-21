@@ -12,6 +12,7 @@
                                com.lambdaisland/classpath {:mvn/version "0.4.44"}
 
                                ;; Components
+                               poly/env {:local/root "components/env"}
                                poly/app-state {:local/root "components/app-state"}
                                poly/database {:local/root "components/database"}
                                poly/web-server {:local/root "components/web-server"}
@@ -29,5 +30,16 @@
 
             :test {:extra-paths ["components/database/test"]}
 
+            :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}
+                           org.clojure/tools.deps {:mvn/version "0.16.1281"}}
+                    :paths ["build/resources"]
+                    :ns-default build}
+
             :poly {:main-opts ["-m" "polylith.clj.core.poly-cli.core"]
-                   :extra-deps {polylith/clj-poly {:mvn/version "0.2.18"}}}}}
+                   :extra-deps {polylith/clj-poly {:mvn/version "0.2.18"}}}
+
+            :polyx {:main-opts ["-m" "polylith.clj.core.poly-cli.core"]
+                    :extra-deps {polyfy/polylith
+                                 {:git/url   "https://github.com/polyfy/polylith"
+                                  :sha       "9e79264981b0c5be6e6cb70c93a540a82c489510"
+                                  :deps/root "projects/polyx"}}}}}

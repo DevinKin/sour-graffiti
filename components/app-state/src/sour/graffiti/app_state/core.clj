@@ -6,6 +6,3 @@
 (defn system-config
   [options]
   (config/read-config system-filename options))
-
-(comment
-  (system-config {:profile :dev}))
