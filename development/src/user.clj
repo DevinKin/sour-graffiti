@@ -15,7 +15,7 @@
    [sour.graffiti.database.interface]
    [sour.graffiti.web-server.interface]
    ;[sour.graffiti.culture.main]
-   [sour.graffiti.shop.main]
+   ;[sour.graffiti.shop.main]
    [polylith.clj.core.api.interface :refer [workspace]]))
 
 (watch-deps/start! {:aliases [:dev :test]})
@@ -32,17 +32,21 @@
 
 (dev-prep!)
 
-;; fix: need to refresh by bases and its bricks
-(apply repl/set-refresh-dirs (filter (fn [path]
-                                       (and
-                                        (not= path "development/src")
-                                        (string/includes? path "/src"))) (workspace "stable" "paths" "existing")))
+(defn set-refresh-project
+  "set-refresh-dirs base on project and its config"
+  [project-name]
+  (let [project (workspace "stable" "projects" project-name)
+        base-name (-> project (get-in [:base-names :src]) first)
+        require-path (symbol (str "sour.graffiti." base-name ".main"))
+        source-paths (-> project (get-in [:paths :src]))]
+    (require require-path)
+    (clojure.tools.logging/info "refresh-source-paths: " source-paths)
+    (apply repl/set-refresh-dirs (filter #(string/includes? % "/src") source-paths))))
+
+(set-refresh-project "g-cul")
 
 (def refresh repl/refresh)
 
 (comment
-  (filter (fn [path]
-            (and (not= path "development/src")
-                 (string/includes? path "/src"))) (workspace "stable" "paths" "existing"))
   (go)
   (reset))

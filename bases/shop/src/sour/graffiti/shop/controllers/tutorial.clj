@@ -11,5 +11,5 @@
   (http-response/ok
    {:time     (str (Date. (System/currentTimeMillis)))
     :up-since (str (Date. (.getStartTime (java.lang.management.ManagementFactory/getRuntimeMXBean))))
-    :app      {:status  "Shop Service up"
+    :app      {:status  "Shop Service up and updated"
                :message ""}}))
