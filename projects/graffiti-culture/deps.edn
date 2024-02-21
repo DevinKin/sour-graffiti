@@ -1,0 +1,18 @@
+{:deps {org.clojure/clojure {:mvn/version "1.11.1"}
+
+        ;; Components
+        poly/app-state {:local/root "../../components/app-state"}
+        poly/database {:local/root "../../components/database"}
+        poly/web-server {:local/root "../../components/web-server"}
+        poly/role {:local/root "../../components/role"}
+        poly/user {:local/root "../../components/user"}
+        poly/tag {:local/root "../../components/tag"}
+        poly/article {:local/root "../../components/article"}
+        poly/comment {:local/root "../../components/comment"}
+
+        ;; Bases
+        poly/culture {:local/root "../../bases/culture"}}
+
+ :aliases {:test {:extra-paths []
+                  :extra-deps  {}}
+           :uberjar {:main sour.graffiti.culture.main}}}

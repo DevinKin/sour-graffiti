@@ -9,4 +9,5 @@
  :projects {"development" {:alias "dev"
                            #_:test #_{:setup-fn sour.graffiti.database.test-setup/setup
                                       :teardown-fn sour.graffiti.database.test-setup/teardown}}
-            "sour-tutorial" {:alias "stut"}}}
+            "graffiti-culture" {:alias "g-cul"}
+            "graffiti-shop" {:alias "g-shop"}}}

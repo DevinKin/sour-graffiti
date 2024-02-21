@@ -5,20 +5,29 @@
                                ;; Logging
                                ch.qos.logback/logback-classic {:mvn/version "1.4.11"}
 
-                               ;dev integrant hot reload
+                               ;;dev integrant hot reload
                                org.clojure/tools.namespace {:mvn/version "1.4.4"}
                                expound/expound {:mvn/version "0.9.0"}
                                integrant/repl {:mvn/version "0.3.3"}
                                com.lambdaisland/classpath {:mvn/version "0.4.44"}
 
-                               ; Components
+                               ;; Components
                                poly/app-state {:local/root "components/app-state"}
                                poly/database {:local/root "components/database"}
+                               poly/web-server {:local/root "components/web-server"}
+                               poly/article {:local/root "components/article"}
+                               poly/tag {:local/root "components/tag"}
+                               poly/comment {:local/root "components/comment"}
+                               poly/role {:local/root "components/role"}
+                               poly/user {:local/root "components/user"}
+
+                               ;; Bases
+                               poly/culture {:local/root "bases/culture"}
+                               poly/shop {:local/root "bases/shop"}
 
                                polylith/clj-poly {:mvn/version "0.2.18"}}}
 
-            :test {:extra-paths ["components/app-state/test"
-                                 "components/database/test"]}
+            :test {:extra-paths ["components/database/test"]}
 
             :poly {:main-opts ["-m" "polylith.clj.core.poly-cli.core"]
                    :extra-deps {polylith/clj-poly {:mvn/version "0.2.18"}}}}}

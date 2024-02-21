@@ -12,7 +12,9 @@
    [integrant.repl.state :as state]
    [lambdaisland.classpath.watch-deps :as watch-deps]
    [sour.graffiti.app-state.interface :as app-state]
-   [sour.graffiti.database.interface :as database]
+   [sour.graffiti.database.interface]
+   [sour.graffiti.web-server.interface]
+   [sour.graffiti.culture.main]
    [polylith.clj.core.api.interface :refer [workspace]]))
 
 (watch-deps/start! {:aliases [:dev :test]})
@@ -30,11 +32,15 @@
 (dev-prep!)
 
 (apply repl/set-refresh-dirs (filter (fn [path]
-                                       (and (not= path "development/src")
-                                            (string/includes? path "/src"))) (workspace "stable" "paths" "existing")))
+                                       (and
+                                        (not= path "development/src")
+                                        (string/includes? path "/src"))) (workspace "stable" "paths" "existing")))
 
 (def refresh repl/refresh)
 
 (comment
+  (filter (fn [path]
+            (and (not= path "development/src")
+                 (string/includes? path "/src"))) (workspace "stable" "paths" "existing"))
   (go)
   (reset))

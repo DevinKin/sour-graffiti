@@ -17,10 +17,7 @@
     #{:!} (execute this db sqlvec options)
     #{:? :<!} (query this db sqlvec options)))
 
-#_(defmethod hugsql-command-fn :! [_sym] `log-command-fn)
-#_(defmethod hugsql-command-fn :<! [_sym] `log-command-fn)
-#_(defmethod hugsql-command-fn :? [_sym] `log-command-fn)
+(defmethod hugsql-command-fn :! [_sym] `log-command-fn)
+(defmethod hugsql-command-fn :<! [_sym] `log-command-fn)
+(defmethod hugsql-command-fn :? [_sym] `log-command-fn)
 
-(defmethod hugsql.core/hugsql-command-fn :! [_sym] `log-command-fn)
-(defmethod hugsql.core/hugsql-command-fn :<! [_sym] `log-command-fn)
-(defmethod hugsql.core/hugsql-command-fn :? [_sym] `log-command-fn)
