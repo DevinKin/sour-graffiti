@@ -22,6 +22,10 @@
                  :exception ex
                  :where (str "Uncaught exception on" (.getName thread))}))))
 
+(defn db-query-fn
+  []
+  (some-> (deref system) :db.sql/query-fn))
+
 (defn stop
   "stop the web server"
   []

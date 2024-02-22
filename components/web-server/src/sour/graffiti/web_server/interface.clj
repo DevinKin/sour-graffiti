@@ -14,6 +14,14 @@
   [& [params]]
   (web-server/start params))
 
+(defn db-query
+  "query db by query-name and params
+   :query-name query keyword in resources/*/*.sql
+   :params the query parameters"
+  [query-name params]
+  (when-let [query-fn (web-server/db-query-fn)]
+    (query-fn query-name params)))
+
 (def wrap-exception-mw exception/wrap-exception)
 
 (def format-instance formats/instance)
