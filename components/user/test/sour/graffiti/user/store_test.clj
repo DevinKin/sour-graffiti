@@ -1,20 +1,33 @@
 (ns sour.graffiti.user.store-test
   (:require [clojure.test :as test :refer :all]
-            [sour.graffiti.user.store :as user]))
-
-(defonce db (atom nil))
+            [sour.graffiti.user.store :as user]
+            [sour.graffiti.app-state.interface :as app-state]
+            [sour.graffiti.database.interface :as database]))
 
 (defn prepare-for-tests
   [f]
-  (let [config (app-state/system-config {:profile :test})
-        test-db (->> config
-                     (app-state/init-system))]
-    (database/reset test-db)
-    (reset! db test-db)
-    (f)
-    (some-> (deref db) (app-state/halt-system))))
+  ;; setup test system
+  (-> {:profile :test}
+      (app-state/system-config)
+      (select-keys [:db.sql/connection :db.sql/query-fn :db.sql/migrations])
+      (app-state/init-system)
+      (app-state/setup-system!))
 
-(use-fixtures :each prepare-for-tests)
+  ;; reset migrations
+  (database/reset (app-state/system))
+  (f)
 
-(deftest dummy-test
-  (is (= 1 1)))
+  ;; halt test system
+  (app-state/halt-system))
+
+(use-fixtures :once prepare-for-tests)
+
+(deftest add-user-test
+  (let [result (user/add-user! {:name "lala" :email "lala@163.com" :password "a123456"})]
+    (is (= 1 result))))
+
+(deftest find-user-by-id-test
+  (let [user (user/get-user-by-id 1)]
+    (prn user)
+    (is (= 1 (:id user)))))
+
