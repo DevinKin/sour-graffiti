@@ -19,5 +19,4 @@
 
 (comment
   (setup "test")
-  (prn @test-system)
   (teardown "test"))

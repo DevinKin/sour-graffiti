@@ -8,7 +8,7 @@
    ;[criterium.core :as c]                                  ;; benchmarking
    [expound.alpha :as expound]
    [integrant.core :as ig]
-   [integrant.repl :refer [clear go halt prep init reset reset-all]]
+   [integrant.repl :refer [go reset reset-all clear halt prep init] :as ig-repl]
    [integrant.repl.state :as state]
    [lambdaisland.classpath.watch-deps :as watch-deps]
    ;[sour.graffiti.culture.main]
@@ -46,9 +46,24 @@
 
 (def refresh repl/refresh)
 
-(defn query
-  [query-name params]
-  ((:db.sql/query-fn state/system) query-name params))
+(defn db-execute
+  [sql-name params]
+  ((:db.sql/query-fn state/system) sql-name params))
+
+#_(defn go
+    []
+    (ig-repl/go)
+    (app-state/setup-system! state/system))
+
+#_(defn reset
+    []
+    (ig-repl/reset)
+    (app-state/setup-system! state/system))
+
+#_(defn reset-all
+    []
+    (ig-repl/reset-all)
+    (app-state/setup-system! state/system))
 
 (comment
   (go)

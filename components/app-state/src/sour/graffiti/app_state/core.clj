@@ -6,3 +6,13 @@
 (defn system-config
   [options]
   (config/read-config system-filename options))
+
+(defonce system (atom nil))
+
+(defn setup-system!
+  [cus-system]
+  (reset! system cus-system))
+
+(defn get-system
+  []
+  @system)

@@ -1,6 +1,7 @@
 (ns sour.graffiti.app-state.interface
   (:require [kit.config :as config]
-            [integrant.core :as ig]))
+            [integrant.core :as ig]
+            [sour.graffiti.app-state.core :as core]))
 
 (def ^:const system-filename "app-state/system.edn")
 
@@ -25,3 +26,13 @@
   "resume provided system"
   [system config]
   (ig/resume system config))
+
+(defn setup-system!
+  "setup provided system"
+  [system]
+  (core/setup-system! system))
+
+(defn system
+  "get current system"
+  []
+  (core/get-system))

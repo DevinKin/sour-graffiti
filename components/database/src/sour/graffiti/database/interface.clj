@@ -1,6 +1,6 @@
 (ns sour.graffiti.database.interface
   (:require
-   [sour.graffiti.database.core]
+   [sour.graffiti.database.core :as database]
 
    ;; Edge
    [kit.edge.db.sql.migratus]
@@ -35,3 +35,11 @@
 
 (defn migrate-until-just-before [system migration-id]
   (migratus/migrate-until-just-before (:db.sql/migrations system) migration-id))
+
+(defn db-execute
+  "execute sql by sql-name and params
+   :sql-name query keyword in resources/*/*.sql
+   :params the query parameters
+  "
+  [sql-name params]
+  (database/db-execute-fn sql-name params))

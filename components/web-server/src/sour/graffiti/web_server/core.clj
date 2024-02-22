@@ -12,7 +12,6 @@
    [kit.edge.utils.nrepl]
    [kit.edge.server.undertow]))
 
-(defonce system (atom nil))
 
 ;; log uncaught exceptions in threads
 (Thread/setDefaultUncaughtExceptionHandler
@@ -22,15 +21,11 @@
                  :exception ex
                  :where (str "Uncaught exception on" (.getName thread))}))))
 
-(defn db-query-fn
-  []
-  (some-> (deref system) :db.sql/query-fn))
-
 (defn stop
   "stop the web server"
   []
   ((or (:stop defaults) (fn [])))
-  (some-> (deref system) (app-state/halt-system))
+  (app-state/halt-system)
   (shutdown-agents))
 
 (defn start
@@ -39,5 +34,5 @@
   ((or (:start params) (:start defaults) (fn [])))
   (->> (app-state/system-config (or (:opts params) (:opts defaults) {}))
        (app-state/init-system)
-       (reset! system))
+       (app-state/setup-system!))
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop)))
