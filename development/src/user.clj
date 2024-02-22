@@ -14,6 +14,7 @@
    ;[sour.graffiti.culture.main]
    ;[sour.graffiti.shop.main]
    [sour.graffiti.app-state.interface :as app-state]
+   [sour.graffiti.database.interface :as database]
    [polylith.clj.core.api.interface :refer [workspace]]))
 
 (watch-deps/start! {:aliases [:dev :test]})
@@ -44,6 +45,10 @@
 (set-refresh-project "g-cul")
 
 (def refresh repl/refresh)
+
+(defn query
+  [query-name params]
+  ((:db.sql/query-fn state/system) query-name params))
 
 (comment
   (go)
