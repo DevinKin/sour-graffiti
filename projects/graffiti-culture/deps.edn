@@ -5,7 +5,6 @@
         poly/app-state {:local/root "../../components/app-state"}
         poly/database {:local/root "../../components/database"}
         poly/web-server {:local/root "../../components/web-server"}
-        poly/role {:local/root "../../components/role"}
         poly/user {:local/root "../../components/user"}
         poly/tag {:local/root "../../components/tag"}
         poly/article {:local/root "../../components/article"}

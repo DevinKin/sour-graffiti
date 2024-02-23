@@ -1,6 +1,7 @@
 (ns user
   "Userspace functions you can run by default in your local REPL."
   (:require
+   [clojure.tools.logging :as log]
    [clojure.pprint]
    [clojure.string :as string]
    [clojure.spec.alpha :as s]
@@ -39,7 +40,7 @@
         require-path (symbol (str "sour.graffiti." base-name ".main"))
         source-paths (-> project (get-in [:paths :src]))]
     (require require-path)
-    (clojure.tools.logging/info "refresh-source-paths: " source-paths)
+    (log/info "refresh-source-paths: " source-paths)
     (apply repl/set-refresh-dirs (filter #(string/includes? % "/src") source-paths))))
 
 (set-refresh-project "g-cul")

@@ -1,5 +1,5 @@
 (ns sour.graffiti.user.store-test
-  (:require [clojure.test :as test :refer :all]
+  (:require [clojure.test :refer [deftest is are]]
             [sour.graffiti.user.store :as user]
             [sour.graffiti.app-state.interface :as app-state]
             [sour.graffiti.database.interface :as database]))
@@ -58,8 +58,6 @@
       (select-keys [:db.sql/connection :db.sql/query-fn :db.sql/migrations])
       (app-state/init-system)
       (app-state/setup-system!))
-  ;; reset migrations
-  (database/reset (app-state/system))
 
   ;; unit test in order
   (add-user-test)
@@ -68,6 +66,9 @@
   (update-user-active-test)
   (update-user-password-and-active-test)
   (find-user-test)
+
+  ;; reset migrations
+  (database/reset (app-state/system))
 
   ;; halt test system
   (app-state/halt-system))

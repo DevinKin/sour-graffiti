@@ -19,7 +19,6 @@
                                poly/article {:local/root "components/article"}
                                poly/tag {:local/root "components/tag"}
                                poly/comment {:local/root "components/comment"}
-                               poly/role {:local/root "components/role"}
                                poly/user {:local/root "components/user"}
 
                                ;; Bases
@@ -28,7 +27,10 @@
 
                                polylith/clj-poly {:mvn/version "0.2.18"}}}
 
-            :test {:extra-paths ["components/user/test"]}
+            :test {:extra-paths ["components/user/test"
+                                 "components/article/test"
+                                 "components/comment/test"
+                                 "components/tag/test"]}
 
             :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.6"}
                            org.clojure/tools.deps {:mvn/version "0.16.1281"}}
