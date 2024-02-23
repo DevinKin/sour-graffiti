@@ -50,21 +50,6 @@
   [sql-name params]
   ((:db.sql/query-fn state/system) sql-name params))
 
-#_(defn go
-    []
-    (ig-repl/go)
-    (app-state/setup-system! state/system))
-
-#_(defn reset
-    []
-    (ig-repl/reset)
-    (app-state/setup-system! state/system))
-
-#_(defn reset-all
-    []
-    (ig-repl/reset-all)
-    (app-state/setup-system! state/system))
-
 (comment
   (go)
   (reset))
