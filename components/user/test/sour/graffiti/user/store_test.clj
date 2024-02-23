@@ -6,7 +6,6 @@
 
 (def user {:name "lala" :email "lala@163.com" :password "a123456"})
 
-
 (deftest add-user-test
   (let [result (user/add-user! user)]
     (is (= 1 result))))
@@ -42,6 +41,14 @@
       (:password new-user) (:password db-user)
       (:active new-user) (:active db-user))))
 
+(deftest find-user-test
+  (let [name "lala"
+        email "lala@163.com"
+        find-by-name (user/find-by-name name)
+        find-by-email (user/find-by-email email)]
+    (are [x y] (= x y)
+      name (:name find-by-name)
+      email (:email find-by-email))))
 
 (defn test-ns-hook
   []
@@ -60,6 +67,7 @@
   (update-user-password-test)
   (update-user-active-test)
   (update-user-password-and-active-test)
+  (find-user-test)
 
   ;; halt test system
   (app-state/halt-system))

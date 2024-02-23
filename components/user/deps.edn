@@ -1,4 +1,4 @@
 {:paths ["src" "resources"]
- :deps {}
+ :deps {crypto-password/crypto-password {:mvn/version "0.3.0"}}
  :aliases {:test {:extra-paths ["test"]
                   :extra-deps {}}}}

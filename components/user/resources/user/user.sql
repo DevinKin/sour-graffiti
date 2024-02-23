@@ -19,3 +19,12 @@ update "user" SET
   (clojure.string/join ", "))
 ~*/
 WHERE name = :name
+
+
+-- :name find-user :? :1
+-- :doc returns a user object by name or email, or nil if not present
+SELECT *
+FROM "user" u
+WHERE 1=1
+--~ (if (:name params) " and name = :name")
+--~ (if (:email params) " and email = :email")

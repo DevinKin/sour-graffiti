@@ -9,7 +9,7 @@
    [reitit.ring.middleware.parameters :as parameters]
    [reitit.swagger :as swagger]
    [sour.graffiti.shop.controllers.tutorial :as tutorial]
-   [sour.graffiti.web-server.interface :refer [format-instance wrap-exception-mw]]))
+   [sour.graffiti.web-server.interface :refer [format-instance mw-wrap-exception]]))
 
 (defn route-data [opts]
   "api route data"
@@ -33,7 +33,7 @@
                   ;; coercing request parameters
                  coercion/coerce-request-middleware
                   ;; exception handling
-                 wrap-exception-mw
+                 mw-wrap-exception
                 ;; multipart
                  multipart/multipart-middleware]}))
 

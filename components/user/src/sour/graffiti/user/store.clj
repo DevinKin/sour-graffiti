@@ -16,3 +16,11 @@
   (db-execute :update-user! (cond-> {:name name}
                               (not (nil? password)) (assoc :password password)
                               (not (nil? active)) (assoc :active active))))
+
+(defn find-by-name
+  [name]
+  (db-execute :find-user {:name name}))
+
+(defn find-by-email
+  [email]
+  (db-execute :find-user {:email email}))

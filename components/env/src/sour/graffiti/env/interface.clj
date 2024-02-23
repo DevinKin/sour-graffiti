@@ -1,5 +1,6 @@
 (ns sour.graffiti.env.interface
-  (:require [clojure.tools.logging :as log]))
+  (:require
+   [clojure.tools.logging :as log]))
 
 (def profile (or (System/getenv "PROFILE") "dev"))
 
@@ -8,6 +9,9 @@
 
 (defn shutdown-log []
   (log/info "\n-=[service started successfully using the prod profile]=-"))
+
+(defn wrap-dev [handler _opts]
+  (-> handler))
 
 (def defaults
   (case profile
@@ -19,4 +23,5 @@
             :opts {:profile :prod}}
     "dev" {:start      (partial startup-log "dev")
            :stop       shutdown-log
+           :middleware wrap-dev
            :opts {:profile :dev}}))

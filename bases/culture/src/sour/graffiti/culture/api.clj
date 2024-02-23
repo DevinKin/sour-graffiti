@@ -8,8 +8,10 @@
    [reitit.ring.middleware.muuntaja :as muuntaja]
    [reitit.ring.middleware.parameters :as parameters]
    [reitit.swagger :as swagger]
+   [clojure.tools.logging :as log]
    [sour.graffiti.culture.controllers.tutorial :as tutorial]
-   [sour.graffiti.web-server.interface :refer [format-instance wrap-exception-mw]]))
+   [sour.graffiti.web-server.interface :refer [format-instance mw-wrap-exception mw-wrap-authorization]]))
+
 
 (defn route-data [opts]
   "api route data"
@@ -20,21 +22,21 @@
     :swagger    {:id ::api}
     :middleware [;; query-params & form-params
                  parameters/parameters-middleware
-                  ;; content-negotiation
+                 ;; content-negotiation
                  muuntaja/format-negotiate-middleware
-                  ;; encoding response body
+                 ;; encoding response body
                  muuntaja/format-response-middleware
-                  ;; exception handling
+                 ;; exception handling
                  coercion/coerce-exceptions-middleware
-                  ;; decoding request body
+                 ;; decoding request body
                  muuntaja/format-request-middleware
-                  ;; coercing response bodys
+                 ;; coercing response bodys
                  coercion/coerce-response-middleware
-                  ;; coercing request parameters
+                 ;; coercing request parameters
                  coercion/coerce-request-middleware
-                  ;; exception handling
-                 wrap-exception-mw
-                ;; multipart
+                 ;; exception handling
+                 mw-wrap-exception
+                 ;; multipart
                  multipart/multipart-middleware]}))
 
 ;; Routes
@@ -43,8 +45,12 @@
     {:get {:no-doc  true
            :swagger {:info {:title "Culture Service API"}}
            :handler (swagger/create-swagger-handler)}}]
-   ["/tutorial"
-    {:get tutorial/healthcheck!}]])
+   ["/login"
+    {:get tutorial/login}]
+   [""
+    {:middleware [mw-wrap-authorization]}
+    ["/tutorial"
+     {:get tutorial/healthcheck!}]]])
 
 (derive :reitit.routes/api :reitit/routes)
 
