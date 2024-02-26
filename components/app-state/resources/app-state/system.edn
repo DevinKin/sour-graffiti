@@ -13,9 +13,7 @@
   :handler #ig/ref :handler/ring}
 
  :jwt/signed
- {:secret #profile {:dev #or [#env JWT_SECRET "ZZPYUKNTZCBURPTN"]
-                    :test [#env JWT_SECRET]
-                    :prod [#env JWT_SECRET]}
+ {:secret #or [#env JWT_SECRET "ZZPYUKNTZCBURPTN"]
   :alg :hs512
   :expire [7 :days]}
 

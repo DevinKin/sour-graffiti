@@ -20,6 +20,7 @@
                                poly/tag {:local/root "components/tag"}
                                poly/comment {:local/root "components/comment"}
                                poly/user {:local/root "components/user"}
+                               poly/spec {:local/root "components/spec"}
 
                                ;; Bases
                                poly/auth {:local/root "bases/auth"}

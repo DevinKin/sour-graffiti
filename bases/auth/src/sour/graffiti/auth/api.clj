@@ -7,7 +7,7 @@
    [reitit.ring.middleware.muuntaja :as muuntaja]
    [reitit.ring.middleware.parameters :as parameters]
    [reitit.swagger :as swagger]
-   [sour.graffiti.auth.spec :as spec]
+   [sour.graffiti.user.interface.spec :as spec]
    [sour.graffiti.auth.handler :as handler]
 
 

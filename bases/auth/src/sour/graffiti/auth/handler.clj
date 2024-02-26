@@ -9,7 +9,6 @@
   (let [session (:session request)
         user {:name name :email email :password password}
         [ok? res] (user/regist! user)]
-    (log/info session)
     (if ok?
       (-> res
           (http-response/ok)
@@ -19,8 +18,7 @@
 
 (defn login
   [request]
-  (http-response/ok {:message "login success"
-                     :token "token"}))
+  (http-response/ok {:message "login success"}))
 
 (defn user-active
   [request])

@@ -9,9 +9,6 @@
    [reitit.ring :as ring]
    [reitit.swagger-ui :as swagger-ui]))
 
-(defmethod ig/init-key :jwt/signed
-  [_ jws]
-  jws)
 
 (defmethod ig/init-key :handler/ring
   [_ {:keys [router api-path] :as opts}]

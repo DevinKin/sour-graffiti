@@ -1,5 +1,6 @@
 (ns sour.graffiti.app-state.core
   (:require
+   [integrant.core :as ig]
    [integrant.repl.state :as state]
    [kit.config :as config]))
 
@@ -18,3 +19,7 @@
 (defn get-system
   []
   (or @system state/system))
+
+(defmethod ig/init-key :jwt/signed
+  [_ jws]
+  jws)

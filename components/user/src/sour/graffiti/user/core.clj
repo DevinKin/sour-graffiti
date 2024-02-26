@@ -10,13 +10,18 @@
   (-> password crypto/encrypt str))
 
 (defn- generate-token [email name]
-  (let [{:keys [secret alg expire]} (:jws (app-state/system))
+  (let [{:keys [secret alg expire]} (:jwt/signed (app-state/system))
         now (t/now)
         claim {:sub name
                :iss email
                :exp (t/>> now (apply t/new-duration expire))
                :iat now}]
     (jwt/sign claim secret {:alg alg})))
+
+(defn user->visible-user [user token]
+  {:user (-> user
+             (assoc :token token)
+             (dissoc :id :password :active))})
 
 (defn regist!
   [{:keys [name email password]}]
@@ -27,15 +32,17 @@
       (let [user {:name name :email email :password (encrypt-password password)}
             _ (store/add-user! user)]
         (if-let [user (store/find-by-email email)]
-          [true (dissoc user :password)]
+          (let [token (generate-token email (:name user))]
+            [true (user->visible-user user token)])
           [false {:errors {:other "Cannot add user into db."}}])))))
 
-(defn login
+(defn login!
   [{:keys [email password]}]
   (if-let [user (store/find-by-email email)]
     (if (:active user)
       (if (crypto/check password (:password user))
-        [true (dissoc user :password)]
+        (let [token (generate-token email (:name user))]
+          [true (user->visible-user user token)])
         [false {:errors {:password "Invalid password."}}])
       [false {:errors {:active "The user has not yet activated."}}])
     [false {:errors {:email "Invalid email."}}]))

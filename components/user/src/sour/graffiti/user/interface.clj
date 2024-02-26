@@ -5,9 +5,9 @@
   [user]
   (core/regist! user))
 
-(defn login
+(defn login!
   [user]
-  (core/login user))
+  (core/login! user))
 
 (defn active-user!
   [user]

@@ -8,6 +8,7 @@
         poly/database {:local/root "../../components/database"}
         poly/web-server {:local/root "../../components/web-server"}
         poly/user {:local/root "../../components/user"}
+        poly/spec {:local/root "../../components/spec"}
 
         ;; Bases
         poly/auth {:local/root "../../bases/auth"}}
