@@ -7,10 +7,11 @@
    [reitit.ring.middleware.muuntaja :as muuntaja]
    [reitit.ring.middleware.parameters :as parameters]
    [reitit.swagger :as swagger]
+   [malli.util :as mu]
+   [malli.generator :as mg]
    [sour.graffiti.user.interface.spec :as spec]
+   [sour.graffiti.spec.interface :refer [username? email?]]
    [sour.graffiti.auth.handler :as handler]
-
-
    [sour.graffiti.web-server.interface :refer [format-instance mw-wrap-exception wrap-user-authorization] :as web-server]))
 
 (defn route-data [opts]
@@ -39,7 +40,6 @@
                  ;; multipart
                  multipart/multipart-middleware]}))
 
-
 ;; Routes
 (defn api-routes [_opts]
   [["/swagger.json"
@@ -49,17 +49,22 @@
    ["/user"
     {:tags #{"user"}}
     ["/register"
-     {:post {:summary "user register api"
+     {:post {:summary "user register"
              :parameters {:body spec/register}
-             :handler handler/regist}}]
-    ["/active"
-     {:put handler/user-active}]
+             :handler handler/regist
+             :responses {200 {:body spec/authenticated-user}}}}]
     ["/login"
-     {:post handler/login}]
+     {:post {:summary "user login"
+             :parameters {:body spec/login}
+             :handler handler/login
+             :responses {200 {:body spec/authenticated-user}}}}]
     [""
      {:middleware [wrap-user-authorization]}
      ["/reset-password"
-      {:post handler/user-reset-password}]]]])
+      {:post {:summary "user reset password"
+              :parameters {:body spec/reset-password}
+              :handler handler/user-reset-password
+              :responses {200 {:body {:message [:string {:default "success"}]}}}}}]]]])
 
 (derive :reitit.routes/api :reitit/routes)
 

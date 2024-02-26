@@ -1,6 +1,5 @@
 {:deps {org.clojure/clojure {:mvn/version "1.11.1"}
 
-        buddy/buddy-sign {:mvn/version "3.5.351"}
 
         ;; Components
         poly/env {:local/root "../../components/env"}

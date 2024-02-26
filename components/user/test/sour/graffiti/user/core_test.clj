@@ -97,10 +97,12 @@
 (deftest update-password-correct-result
   (let [[ok? res] (core/update-user-password! (assoc user
                                                      :origin-password (:password user)
-                                                     :new-password new-password))]
+                                                     :new-password new-password))
+        {:keys [password]} (store/find-by-email (:email user))]
     (are [x y] (= x y)
       ok? true
-      res 1)))
+      res 1
+      (crypto/check new-password password) true)))
 
 (defn test-ns-hook
   []

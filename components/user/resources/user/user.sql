@@ -20,7 +20,6 @@ update "user" SET
 ~*/
 WHERE name = :name
 
-
 -- :name find-user :? :1
 -- :doc returns a user object by name or email, or nil if not present
 SELECT *

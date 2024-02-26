@@ -4,4 +4,8 @@
 
 (def register spec/register)
 
+(def login spec/login)
+
 (def authenticated-user spec/authenticated-user)
+
+(def reset-password spec/reset-password)

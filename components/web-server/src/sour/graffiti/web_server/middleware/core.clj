@@ -1,14 +1,13 @@
 (ns sour.graffiti.web-server.middleware.core
   (:require
    [ring.middleware.defaults :as defaults]
-   [sour.graffiti.env.interface :as env]
-   [sour.graffiti.app-state.interface :as app-state]
-
-   [clojure.tools.logging :as log]
-   ;; buddy signed jwt
    [buddy.auth.backends :as backends]
    [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
-   [buddy.auth :refer [authenticated? throw-unauthorized]]))
+   [buddy.auth :refer [authenticated?]]
+   [ring.util.http-response :as http-response]
+
+
+   [sour.graffiti.env.interface :as env]))
 
 (defn wrap-base
   [{:keys [site-defaults-config jws] :as opts}]
@@ -22,9 +21,8 @@
 
 (defn wrap-user-authorization [handler]
   (fn [request]
-    (log/info (:identity request))
-    (when (not (authenticated? request))
-      (throw-unauthorized {:errors {:authorization "Authorization required."}}))
-    (handler request)))
+    (if (not (authenticated? request))
+      (http-response/unauthorized {:errors {:authorization "Authorization required."}})
+      (handler request))))
 
 (comment)

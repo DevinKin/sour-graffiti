@@ -61,6 +61,6 @@
              (not (crypto/check origin-password (:password user))))
       [false {:errors {:origin-password "Origin password not match."}}]
       (let [update-user {:name (:name user)
-                         :password new-password}]
+                         :password (encrypt-password new-password)}]
         [true (store/update-user! update-user)]))
     [false {:errors {:email "Invalid email."}}]))

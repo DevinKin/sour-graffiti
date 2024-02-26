@@ -5,4 +5,6 @@
 
 (def email? core/email?)
 
+(def password? core/password?)
+
 (def non-empty-string core/non-empty-string)
