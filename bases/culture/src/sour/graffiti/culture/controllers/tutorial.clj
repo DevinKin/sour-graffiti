@@ -5,15 +5,6 @@
   (:import
    [java.util Date]))
 
-
-(defn login
-  [request]
-  (let [{:keys [query-fn]} (route-data request)
-        session (:session request)]
-    (-> (http-response/ok
-         {:message "Login success"})
-        (assoc :session (assoc session :username "devin")))))
-
 (defn healthcheck!
   [request]
   (let [{:keys [query-fn]} (route-data request)

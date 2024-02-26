@@ -5,10 +5,9 @@
         poly/app-state {:local/root "../../components/app-state"}
         poly/database {:local/root "../../components/database"}
         poly/web-server {:local/root "../../components/web-server"}
-        poly/user {:local/root "../../components/user"}
 
         ;; Bases
-        poly/culture {:local/root "../../bases/shop"}}
+        poly/shop {:local/root "../../bases/shop"}}
 
  :aliases {:test {:extra-paths []
                   :extra-deps  {}}

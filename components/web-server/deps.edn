@@ -11,6 +11,9 @@
         ring/ring-core {:mvn/version "1.10.0"}
         ring/ring-defaults {:mvn/version "0.3.4"}
 
+        ;; Buddy auth
+        buddy/buddy-auth {:mvn/version "3.0.1"}
+
         ;; kit Libs
         io.github.kit-clj/kit-core {:mvn/version "1.0.6"}
         io.github.kit-clj/kit-undertow {:mvn/version "1.0.6"}

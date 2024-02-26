@@ -1,10 +1,22 @@
 (ns sour.graffiti.user.core
   (:require
+   [buddy.sign.jwt :as jwt]
+   [tick.core :as t]
    [sour.graffiti.user.store :as store]
+   [sour.graffiti.app-state.interface :as app-state]
    [crypto.password.pbkdf2 :as crypto]))
 
 (defn encrypt-password [password]
   (-> password crypto/encrypt str))
+
+(defn- generate-token [email name]
+  (let [{:keys [secret alg expire]} (:jws (app-state/system))
+        now (t/now)
+        claim {:sub name
+               :iss email
+               :exp (t/>> now (apply t/new-duration expire))
+               :iat now}]
+    (jwt/sign claim secret {:alg alg})))
 
 (defn regist!
   [{:keys [name email password]}]

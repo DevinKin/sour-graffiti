@@ -2,20 +2,29 @@
   (:require
    [ring.middleware.defaults :as defaults]
    [sour.graffiti.env.interface :as env]
-   [ring.middleware.session.cookie :as cookie]))
+   [sour.graffiti.app-state.interface :as app-state]
 
+   [clojure.tools.logging :as log]
+   ;; buddy signed jwt
+   [buddy.auth.backends :as backends]
+   [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
+   [buddy.auth :refer [authenticated? throw-unauthorized]]))
 
 (defn wrap-base
-  [{:keys [metrics site-defaults-config cookie-secret] :as opts}]
-  (let [cookie-store (cookie/cookie-store {:key (.getBytes ^String cookie-secret)})]
+  [{:keys [site-defaults-config jws] :as opts}]
+  (let [{:keys [secret alg]} jws
+        backend (backends/jws {:secret secret :options {:alg alg}})]
     (fn [handler]
       (cond-> ((:middleware env/defaults) handler opts)
-        true (defaults/wrap-defaults
-              (assoc-in site-defaults-config [:session :store] cookie-store))))))
+        true (wrap-authorization backend)
+        true (wrap-authentication backend)
+        true (defaults/wrap-defaults site-defaults-config)))))
 
-(defn wrap-authorization [handler]
-  (fn [req]
-    (if-let [username (get-in req [:session :username])]
-      (handler req)
-      {:status 401
-       :body {:erros {:authorization "Authorization required."}}})))
+(defn wrap-user-authorization [handler]
+  (fn [request]
+    (log/info (:identity request))
+    (when (not (authenticated? request))
+      (throw-unauthorized {:errors {:authorization "Authorization required."}}))
+    (handler request)))
+
+(comment)

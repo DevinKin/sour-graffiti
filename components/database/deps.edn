@@ -1,6 +1,5 @@
 {:paths ["src" "resources"]
  :deps {
-        integrant/repl {:mvn/version "0.3.3"}
         io.github.kit-clj/kit-postgres {:mvn/version "1.0.4"}
         io.github.kit-clj/kit-sql-migratus {:mvn/version "1.0.4"}
         io.github.kit-clj/kit-sql-conman {:mvn/version "1.10.1"}}

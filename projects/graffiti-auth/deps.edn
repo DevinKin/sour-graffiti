@@ -1,18 +1,17 @@
 {:deps {org.clojure/clojure {:mvn/version "1.11.1"}
 
+        buddy/buddy-sign {:mvn/version "3.5.351"}
+
         ;; Components
         poly/env {:local/root "../../components/env"}
         poly/app-state {:local/root "../../components/app-state"}
         poly/database {:local/root "../../components/database"}
         poly/web-server {:local/root "../../components/web-server"}
-        poly/tag {:local/root "../../components/tag"}
-        poly/article {:local/root "../../components/article"}
-        poly/comment {:local/root "../../components/comment"}
+        poly/user {:local/root "../../components/user"}
 
         ;; Bases
-        poly/culture {:local/root "../../bases/culture"}}
+        poly/auth {:local/root "../../bases/auth"}}
 
  :aliases {:test {:extra-paths []
                   :extra-deps  {}}
-           :uberjar {:main sour.graffiti.culture.main
-                     :main-opts ["-m" "polylith.clj.core.poly-cli.core"]}}}
+           :uberjar {:main sour.graffiti.auth.main}}}

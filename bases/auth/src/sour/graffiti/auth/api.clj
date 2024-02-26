@@ -1,17 +1,17 @@
-(ns sour.graffiti.culture.api
+(ns sour.graffiti.auth.api
   (:require
    [integrant.core :as ig]
    [reitit.coercion.malli :as malli]
    [reitit.ring.coercion :as coercion]
-   [reitit.ring.malli :refer [temp-file-part]]
    [reitit.ring.middleware.multipart :as multipart]
    [reitit.ring.middleware.muuntaja :as muuntaja]
    [reitit.ring.middleware.parameters :as parameters]
    [reitit.swagger :as swagger]
-   [clojure.tools.logging :as log]
-   [sour.graffiti.culture.controllers.tutorial :as tutorial]
-   [sour.graffiti.web-server.interface :refer [format-instance mw-wrap-exception]]))
+   [sour.graffiti.auth.spec :as spec]
+   [sour.graffiti.auth.handler :as handler]
 
+
+   [sour.graffiti.web-server.interface :refer [format-instance mw-wrap-exception wrap-user-authorization] :as web-server]))
 
 (defn route-data [opts]
   "api route data"
@@ -39,16 +39,27 @@
                  ;; multipart
                  multipart/multipart-middleware]}))
 
+
 ;; Routes
 (defn api-routes [_opts]
   [["/swagger.json"
     {:get {:no-doc  true
-           :swagger {:info {:title "Culture Service API"}}
+           :swagger {:info {:title "Auth Service API"}}
            :handler (swagger/create-swagger-handler)}}]
-   [""
-    {:middleware []}
-    ["/tutorial"
-     {:get tutorial/healthcheck!}]]])
+   ["/user"
+    {:tags #{"user"}}
+    ["/register"
+     {:post {:summary "user register api"
+             :parameters {:body spec/register}
+             :handler handler/regist}}]
+    ["/active"
+     {:put handler/user-active}]
+    ["/login"
+     {:post handler/login}]
+    [""
+     {:middleware [wrap-user-authorization]}
+     ["/reset-password"
+      {:post handler/user-reset-password}]]]])
 
 (derive :reitit.routes/api :reitit/routes)
 

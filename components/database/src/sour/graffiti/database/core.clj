@@ -1,7 +1,6 @@
 (ns sour.graffiti.database.core
   (:require [clojure.tools.logging :as log]
             [clojure.string :as str]
-            [integrant.repl.state :as state]
             [sour.graffiti.app-state.interface :as app-state]
             [hugsql.adapter :refer [execute query]]
             [hugsql.core :refer [hugsql-command-fn]]))
@@ -26,5 +25,5 @@
 
 (defn db-execute-fn
   [sql-name params]
-  (when-let [execute-fn (:db.sql/query-fn (or (app-state/system) state/system))]
+  (when-let [execute-fn (:db.sql/query-fn (app-state/system))]
     (execute-fn sql-name params)))

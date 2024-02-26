@@ -3,7 +3,6 @@
            :test :test
            :prod :prod}
 
-
  :nrepl/server
  {:port #long #or [#env NREPL_PORT 7000]
   :bind #or [#env NREPL_HOST "127.0.0.1"]}
@@ -13,26 +12,35 @@
   :host #or [#env HTTP_HOST "0.0.0.0"]
   :handler #ig/ref :handler/ring}
 
+ :jwt/signed
+ {:secret #profile {:dev #or [#env JWT_SECRET "ZZPYUKNTZCBURPTN"]
+                    :test [#env JWT_SECRET]
+                    :prod [#env JWT_SECRET]}
+  :alg :hs512
+  :expire [7 :days]}
+
  :handler/ring
  {:router #ig/ref :router/core
   :api-path "/api"
-  :cookie-secret #or [#env COOKIE_SECRET "ZZPYUKNTZCBURPTN"]
+  ;; :cookie-secret #or [#env COOKIE_SECRET "ZZPYUKNTZCBURPTN"]
+  :jws #ig/ref :jwt/signed
+  ;; #or [#env JWT_SECRET "ZZPYUKNTZCBURPTN"]
   ;; from ring.middleware.defaults. anti-forgery `false` by default because services may not require it
   :site-defaults-config {:params {:urlencoded true
                                   :multipart true
                                   :nested true
                                   :keywordize true}
-                         :cookies true
-                         :session {:flash true
-                                   :cookie-name "sour.graffiti"
-                                   :cookie-attrs {:max-age 86400
-                                                  :http-only true
-                                                  :same-site :strict}}
-                         :security {:anti-forgery true
-                                    :xss-protection {:enable? true,
-                                                     :mode :block}
-                                    :frame-options :sameorigin
-                                    :content-type-options :nosniff}
+                         ;; :cookies true
+                         #_:session #_{:flash true
+                                       :cookie-name "sour.graffiti"
+                                       :cookie-attrs {:max-age 86400
+                                                      :http-only true
+                                                      :same-site :strict}}
+                         #_:security #_{:anti-forgery false
+                                        :xss-protection {:enable? true,
+                                                         :mode :block}
+                                        :frame-options :sameorigin
+                                        :content-type-options :nosniff}
                          :static {:resources "public"}
                          :responses {:not-modified-responses true
                                      :absolute-redirects true

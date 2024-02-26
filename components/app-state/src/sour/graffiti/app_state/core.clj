@@ -1,5 +1,7 @@
 (ns sour.graffiti.app-state.core
-  (:require [kit.config :as config]))
+  (:require
+   [integrant.repl.state :as state]
+   [kit.config :as config]))
 
 (def ^:const system-filename "app-state/system.edn")
 
@@ -15,4 +17,4 @@
 
 (defn get-system
   []
-  @system)
+  (or @system state/system))

@@ -18,7 +18,7 @@
 
 (def mw-wrap-exception exception/wrap-exception)
 
-(def mw-wrap-authorization core/wrap-authorization)
+(def wrap-user-authorization core/wrap-user-authorization)
 
 (def format-instance formats/instance)
 

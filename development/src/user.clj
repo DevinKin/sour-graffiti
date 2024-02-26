@@ -43,7 +43,7 @@
     (log/info "refresh-source-paths: " source-paths)
     (apply repl/set-refresh-dirs (filter #(string/includes? % "/src") source-paths))))
 
-(set-refresh-project "g-cul")
+(set-refresh-project "g-auth")
 
 (def refresh repl/refresh)
 
