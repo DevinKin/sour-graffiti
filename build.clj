@@ -76,6 +76,6 @@
         (b/compile-clj opts)
         (println "Building uberjar" (str uber-file "..."))
         (b/uber opts)
-        #_(b/delete {:path class-dir})
+        (b/delete {:path class-dir})
         (println "Uberjar is built.")
         opts))))

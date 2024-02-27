@@ -44,7 +44,14 @@
 (defn api-routes [_opts]
   [["/swagger.json"
     {:get {:no-doc  true
-           :swagger {:info {:title "Auth Service API"}}
+           :swagger {:info {:title "Auth Service API"
+                            :description "Swagger doc Auth Service API"
+                            :version "v1.0.0"}
+                     ;; used in /secure APIs below
+                     :securityDefinitions {"auth" {:type :apiKey
+                                                   :in :header
+                                                   :name "Authorization: Token"}}
+                     :tags [{:name "user", :description "user api"}]}
            :handler (swagger/create-swagger-handler)}}]
    ["/user"
     {:tags #{"user"}}
@@ -59,7 +66,8 @@
              :handler handler/login
              :responses {200 {:body spec/authenticated-user}}}}]
     [""
-     {:tags #{"user operation"}
+     {:openapi {:security [{"auth" []}]}
+      :swagger {:security [{"auth" []}]}
       :middleware [wrap-user-authorization]}
      ["/reset-password"
       {:post {:summary "user reset password"
