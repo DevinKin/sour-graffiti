@@ -70,11 +70,12 @@
                               :ns-compile   [main]
                               :uber-file    uber-file})]
         (b/delete {:path class-dir})
-        ;; no src or resources to copy
+        (b/copy-dir {:src-dirs ["resources"]
+                     :target-dir class-dir})
         (println "\nCompiling" (str main "..."))
         (b/compile-clj opts)
         (println "Building uberjar" (str uber-file "..."))
         (b/uber opts)
-        (b/delete {:path class-dir})
+        #_(b/delete {:path class-dir})
         (println "Uberjar is built.")
         opts))))

@@ -20,6 +20,7 @@
             :opts {:profile :test}}
     "prod" {:start      (partial startup-log "prod")
             :stop       shutdown-log
+            :middleware (fn [handler _] handler)
             :opts {:profile :prod}}
     "dev" {:start      (partial startup-log "dev")
            :stop       shutdown-log

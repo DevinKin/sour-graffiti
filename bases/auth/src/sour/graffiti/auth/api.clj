@@ -59,7 +59,8 @@
              :handler handler/login
              :responses {200 {:body spec/authenticated-user}}}}]
     [""
-     {:middleware [wrap-user-authorization]}
+     {:tags #{"user operation"}
+      :middleware [wrap-user-authorization]}
      ["/reset-password"
       {:post {:summary "user reset password"
               :parameters {:body spec/reset-password}

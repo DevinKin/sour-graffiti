@@ -1,6 +1,5 @@
 {:deps {org.clojure/clojure {:mvn/version "1.11.1"}
 
-
         ;; Components
         poly/env {:local/root "../../components/env"}
         poly/app-state {:local/root "../../components/app-state"}
