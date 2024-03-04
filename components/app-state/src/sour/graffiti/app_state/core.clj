@@ -2,7 +2,9 @@
   (:require
    [integrant.core :as ig]
    [integrant.repl.state :as state]
-   [kit.config :as config]))
+   [kit.config :as config]
+   [clojure.tools.logging :as log])
+  (:import [io.minio MinioClient]))
 
 (def ^:const system-filename "app-state/system.edn")
 
@@ -23,3 +25,12 @@
 (defmethod ig/init-key :jwt/signed
   [_ jws]
   jws)
+
+(defmethod ig/init-key :minio/client
+  [_ {:keys [enable? endpoint access-key secret-key]}]
+  (if enable?
+    (-> (MinioClient/builder)
+        (doto
+         (.endpoint endpoint)
+          (.credentials access-key secret-key))
+        (.build))))

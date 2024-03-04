@@ -1,4 +1,4 @@
 {:paths ["src" "resources"]
- :deps {}
+ :deps {io.minio/minio {:mvn/version "8.5.9"}}
  :aliases {:test {:extra-paths ["test"]
                   :extra-deps {}}}}

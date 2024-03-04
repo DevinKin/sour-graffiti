@@ -8,6 +8,7 @@
         poly/tag {:local/root "../../components/tag"}
         poly/article {:local/root "../../components/article"}
         poly/comment {:local/root "../../components/comment"}
+        poly/minio {:local/root "../../components/minio"}
 
         ;; Bases
         poly/culture {:local/root "../../bases/culture"}}

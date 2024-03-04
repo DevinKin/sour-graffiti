@@ -1,7 +1,8 @@
 {:paths ["src" "resources"]
  :deps {;; kit Libs
         io.github.kit-clj/kit-core {:mvn/version "1.0.6"}
-        integrant/repl {:mvn/version "0.3.3"}}
+        integrant/repl {:mvn/version "0.3.3"}
+        io.minio/minio {:mvn/version "8.5.9"}}
 
  :aliases {:test {:extra-paths ["test"]
                   :extra-deps {}}}}

@@ -17,6 +17,12 @@
   :alg :hs512
   :expire [7 :days]}
 
+ :minio/client
+ {:enable? true
+  :endpoint #or [#env MINIO_ENDPOINT "http://localhost:9000"]
+  :access-key #or [#env MINIO_AK "axrEzoOrnQHzw9ZU7Al2"]
+  :secret-key #or [#env MINIO_SK "htqtcmj4j7SmrtuW5rGfBsYf3EnAUUiaym0WjAN3"]}
+
  :handler/ring
  {:router #ig/ref :router/core
   :api-path "/api"

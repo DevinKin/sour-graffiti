@@ -12,8 +12,6 @@
    [integrant.repl :refer [go reset reset-all clear halt prep init] :as ig-repl]
    [integrant.repl.state :as state]
    [lambdaisland.classpath.watch-deps :as watch-deps]
-   ;[sour.graffiti.culture.main]
-   ;[sour.graffiti.shop.main]
    [sour.graffiti.app-state.interface :as app-state]
    [sour.graffiti.database.interface :as database]
    [polylith.clj.core.api.interface :refer [workspace]]))
@@ -43,7 +41,7 @@
     (log/info "refresh-source-paths: " source-paths)
     (apply repl/set-refresh-dirs (filter #(string/includes? % "/src") source-paths))))
 
-(set-refresh-project "g-auth")
+(set-refresh-project "g-cul")
 
 (def refresh repl/refresh)
 
