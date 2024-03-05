@@ -3,9 +3,10 @@
    [sour.graffiti.app-state.interface :as app-state]
    [clojure.java.io :as io]
    [clojure.string :as str])
-  (:import [io.minio GetObjectArgs ListObjectsArgs PutObjectArgs]
+  (:import [io.minio GetObjectArgs ListObjectsArgs PutObjectArgs RemoveObjectsArgs]
+           [java.util LinkedList]
            [java.io InputStream]
-           [io.minio.messages Item]
+           [io.minio.messages Item DeleteObject]
            [io.minio.errors ErrorResponseException]))
 
 (defn- minio-client
@@ -63,7 +64,22 @@
     (-> (minio-client)
         (.putObject put-obj-args))))
 
+(defn remove-objects!
+  [{:keys [bucket obj-names]}]
+  (let [del-objs (new LinkedList)
+        _ (doseq [obj-name obj-names]
+            (.add del-objs (new DeleteObject obj-name)))
+        rm-obj-args (.build
+                     (doto (RemoveObjectsArgs/builder)
+                       (.bucket bucket)
+                       (.objects del-objs)))]
+    (-> (minio-client)
+        (.removeObjects rm-obj-args))))
+
 (comment
+  (remove-objects! {:bucket "sour" :obj-names ["banner/guagua1.jpg"
+                                               "banner/guagua2.jpg"
+                                               "banner/guagua3.jpg"]})
   (put-object {:bucket "sour" :obj-name "banner/guagua3.jpg"
                :size (.length (io/file "guagua1.jpg"))
                :stream (io/input-stream "guagua1.jpg")})
